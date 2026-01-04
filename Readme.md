@@ -58,7 +58,7 @@ index.html
 
 1. Clone the repository  
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/misbha448/aurix-platinum-collection
 Open the project folder
 
 bash
@@ -72,8 +72,7 @@ npx serve
 or use VS Code Live Server.
 
 🌐 Live Demo
-🔗 Live URL:
-(Add your Netlify / Vercel link here)
+🔗 Live URL:https://aurix-platinum-deploy.vercel.app/
 
 🎨 Design Philosophy
 Luxury brands communicate through restraint, not excess.
@@ -88,5 +87,5 @@ Motion
 Precision
 
 📌 Author
-Misbah Falak Khanpagadi
+Misbha Falak Khanpagadi
 Concept UI + 3D Interaction Project
