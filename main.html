@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platinum Collection</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      /* Requested Gradient Theme */
+      background-color: #070f2b;
+      background-image: radial-gradient(at 12% 14%, #070f2b 0%, transparent 60%),
+                        radial-gradient(at 19% 67%, #1b1a55 0%, transparent 50%),
+                        radial-gradient(at 97% 69%, #535c91 0%, transparent 40%),
+                        radial-gradient(at 71% 54%, #9290c3 0%, transparent 30%);
+      color: white;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Scene 1: Intro Animation */
+    #intro {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      /* Match body gradient */
+      background-color: #070f2b;
+      background-image: radial-gradient(at 12% 14%, #070f2b 0%, transparent 60%),
+                        radial-gradient(at 19% 67%, #1b1a55 0%, transparent 50%),
+                        radial-gradient(at 97% 69%, #535c91 0%, transparent 40%),
+                        radial-gradient(at 71% 54%, #9290c3 0%, transparent 30%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      animation: fadeOut 1.5s ease-in-out 3.5s forwards;
+      pointer-events: none;
+    }
+    
+    #intro h1 {
+      font-size: 3rem;
+      letter-spacing: 0.2em;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.5s forwards;
+    }
+
+    .line {
+      width: 0;
+      height: 1px;
+      background: white;
+      margin: 20px 0;
+      animation: expandLine 1s ease-out 1.5s forwards;
+    }
+
+    #intro p {
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 2.5s forwards;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes expandLine { to { width: 200px; } }
+    @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+    /* Scene 2: UI Elements */
+    #brand-overlay {
+      position: absolute;
+      top: 30px; left: 0; width: 100%;
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #brand-overlay h2 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5em; font-weight: 300; text-transform: uppercase; }
+
+    #specs-panel {
+      position: absolute;
+      top: 0; right: 0;
+      width: 30%; height: 100%;
+      text-align: left;
+      display: none;
+      z-index: 20;
+      /* Transparent background to keep gradient visible */
+      background: transparent;
+      padding: 120px 40px 40px 40px;
+      box-sizing: border-box;
+    }
+    #specs-panel h3 { border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin-bottom: 20px; font-weight: 300; letter-spacing: 0.1em; }
+    #specs-panel p { font-size: 0.9rem; line-height: 1.6; color: #ccc; margin: 5px 0; }
+    .spec-row { margin-bottom: 8px; }
+    .spec-key { opacity: 0.65; font-weight: 400; margin-right: 5px; }
+    .spec-val { opacity: 1; font-weight: 600; color: white; }
+
+    .extra-specs { margin-top: 20px; font-size: 0.8rem; color: #aab; letter-spacing: 0.1em; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+
+    #subtext-scene2 {
+      position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+      font-size: 0.9rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.7);
+      text-transform: uppercase; pointer-events: none; z-index: 10;
+      opacity: 0; animation: fadeIn 2s ease-out 4s forwards;
+    }
+    #subtext-scene2.hidden { opacity: 0; transition: opacity 0.5s; animation: none; }
+
+    #footer-text {
+      position: absolute; bottom: 40px; width: 100%;
+      text-align: center; font-size: 1rem; letter-spacing: 0.2em;
+      opacity: 0; transition: opacity 1s; z-index: 10; pointer-events: none;
+      text-transform: uppercase;
+    }
+    #footer-text.visible { opacity: 1; }
+
+    #close {
+      display: none; position: absolute; top: 25px; right: 40px;
+      background: transparent; 
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50px; /* Pill Shape */
+      color: white; padding: 10px 30px; cursor: pointer; z-index: 30;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+    }
+    #close:hover {
+      border-color: white;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Soft Glow */
+      background: rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Scene 1: Intro -->
+  <div id="intro">
+    <h1>PLATINUM COLLECTION</h1>
+    <div class="line"></div>
+    <p>Strength. Precision. Permanence.</p>
+  </div>
+
+  <!-- Scene 2: Persistent UI -->
+  <div id="brand-overlay"><h2>A U R I X</h2></div>
+  <div id="subtext-scene2">Designed for those who lead, not follow.</div>
+  <button id="close">Close</button>
+
+  <div id="specs-panel">
+    <!-- Content will be injected by JS -->
+  </div>
+
+  <div id="footer-text">Engineered for Eternity</div>
+
+  <!-- 3D Scene -->
+  <a-scene embedded renderer="colorManagement: true; alpha: true" style="background: transparent;" cursor="rayOrigin: mouse" raycaster="objects: .ring">
+    <a-entity camera position="0 0 5" look-controls="enabled: false"></a-entity>
+    
+    <a-light type="ambient" intensity="0.4"></a-light>
+    <a-light type="directional" position="2 4 4" intensity="1"></a-light>
+    <!-- Glow Light for Platinum Shine -->
+    <a-light type="point" color="#dbeaff" intensity="0.8" position="0 2 3" distance="10"></a-light>
+    <!-- Rim Light for Edge Highlight -->
+    <a-light type="directional" position="-2 4 -5" intensity="0.5" color="#f0f8ff"></a-light>
+
+    <!-- Soft Shadow for Focus Mode (Hidden initially) -->
+    <!-- Uses a base64 SVG radial gradient for a soft, museum-like shadow -->
+    <a-image id="focus-shadow" position="-1.4 -0.6 3" rotation="-90 0 0" width="1.5" height="1.5" opacity="0.4" visible="false" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9ImJsYWNrIiBzdG9wLW9wYWNpdHk9IjEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9ImJsYWNrIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0idXJsKCNnKSIvPjwvc3ZnPg=="></a-image>
+
+    <!-- Rings: Horizontal Position -->
+    <a-entity id="ring1" class="ring" gltf-model="media/gltf/ring1.glb" position="-3.5 0 0" rotation="0 90 0"></a-entity>
+    <a-entity id="ring2" class="ring" gltf-model="media/gltf/ring2.glb" position="0 0 0" rotation="0 90 0"></a-entity>
+    <a-entity id="ring3" class="ring" gltf-model="media/gltf/ring3.glb" position="3.5 0 0" rotation="0 90 0"></a-entity>
+
+    <!-- Short Display Copy (Labels) -->
+    <a-entity class="ring-label" position="-3.5 -1.2 0">
+      <a-text value="AURIX NOCTIS" align="center" width="4" color="#ffffff" font="exo2bold"></a-text>
+      <a-text value="Forged in shadow. Defined by strength." position="0 -0.3 0" align="center" width="2.5" color="#aab" font="roboto"></a-text>
+    </a-entity>
+    <a-entity class="ring-label" position="0 -1.2 0">
+      <a-text value="AURIX AETHER" align="center" width="4" color="#ffffff" font="exo2bold"></a-text>
+      <a-text value="Pure form. Absolute precision." position="0 -0.3 0" align="center" width="2.5" color="#aab" font="roboto"></a-text>
+    </a-entity>
+    <a-entity class="ring-label" position="3.5 -1.2 0">
+      <a-text value="AURIX OBSIDIAN" align="center" width="4" color="#ffffff" font="exo2bold"></a-text>
+      <a-text value="Bold design. Unbreakable presence." position="0 -0.3 0" align="center" width="2.5" color="#aab" font="roboto"></a-text>
+    </a-entity>
+
+  </a-scene>
+  <script src="js/editor-scene.js"></script>
+</body>
+</html>
